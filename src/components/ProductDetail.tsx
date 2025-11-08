@@ -7,7 +7,9 @@ interface IProductDetailProps{
   products : IProduct[]
 }
 const ProductDetail = (props:IProductDetailProps) => {
+
  const { products} = props;
+ if(!products) return <p> Loading</p>
  // const products = props.products
   return (
     <div>

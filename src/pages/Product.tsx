@@ -1,33 +1,53 @@
 import { useState } from "react";
 import ProductDetail from "../components/ProductDetail";
-export interface IProduct{
-  id: number,
-  name: string,
-  price: number,
-  description: string,
-  category: string
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { Table } from "antd";
+export interface IProduct {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
 }
 const Product = () => {
-  // const [state, setState] = useState<kiểu dữ liệu>(giá trị khởi tạo)
-  const [products, setProducts] = useState<IProduct[]>([
+  const columns = [
     {
-      id: 1,
-      name: "Iphone 17 Promax",
-      price: 3000,
-      description: "This is Iphone 17 Promax",
-      category: "smart phone",
+      title: "id",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      id: 2,
-      name: "Samsung Galaxy S50",
-      price: 2500,
-      description: "This is Samsung Galaxy S50",
-      category: "smart phone",
+      title: "name",
+      dataIndex: "name",
+      key: "name",
     },
-  ]);
+    {
+      title: "price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "category",
+      dataIndex: "category",
+      key: "category",
+    },
+
+  ];
+  const getProduct = async () => {
+    const response = await axios.get("http://localhost:3000/products");
+    return response.data;
+  };
+  const query = useQuery({ queryKey: ["products"], queryFn: getProduct });
+  console.log("query", query.data);
   return (
     <>
-      <ProductDetail products={products} />
+      <Table dataSource={query?.data} columns={columns} />;
     </>
   );
 };
