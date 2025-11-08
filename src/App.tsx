@@ -1,20 +1,16 @@
 import { Route, Routes } from "react-router";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Product from "./pages/Product";
-import AdminLayout from "./layouts/AdminLayout";
+import LayoutAdmin from "./layouts/AdminLayout";
+import User from "./pages/User";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={<LayoutAdmin />}>
           <Route path="product" element={<Product />} />
+          <Route path="user" element={<User />} />
         </Route>
-        <Route path="login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="register" element={<Register />} />
       </Routes>
     </>
   );
