@@ -1,8 +1,8 @@
 import { useState } from "react";
 import ProductDetail from "../components/ProductDetail";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { Table } from "antd";
+import { Button, Popconfirm, Table } from "antd";
 export interface IProduct {
   id: number;
   name: string;
@@ -37,7 +37,26 @@ const Product = () => {
       dataIndex: "category",
       key: "category",
     },
-
+    {
+      title: "Action",
+      key: "Action",
+      render: (record: IProduct) => {
+        return (
+          <div>
+            <Popconfirm
+              title="Are you sure Delete"
+              onConfirm={() => mutation.mutate(record.id)}
+              onCancel={() => console.log("Hủy xóa")}
+            >
+              <Button color="red" variant="solid">
+                {" "}
+                Delete
+              </Button>
+            </Popconfirm>
+          </div>
+        );
+      },
+    },
   ];
   const getProduct = async () => {
     const response = await axios.get("http://localhost:3000/products");
@@ -45,9 +64,26 @@ const Product = () => {
   };
   const query = useQuery({ queryKey: ["products"], queryFn: getProduct });
   console.log("query", query.data);
+
+  const deleteProduct = async (id: number) => {
+    try {
+      const res = await axios.delete(`http://localhost:3000/products/${id}`);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
   return (
     <>
-      <Table dataSource={query?.data} columns={columns} />;
+      <Table dataSource={query?.data} columns={columns} />
     </>
   );
 };
