@@ -1,25 +1,11 @@
 {
-    "products": [
-        {
-            "id": 1,
-            "name": "Iphone 17 Promax",
-            "price": 3000,
-            "description": "This is Iphone 17 Promax",
-            "category": "smart phone"
-        },
-        {
-            "id": 2,
-            "name": "Samsung Galaxy S50",
-            "price": 2500,
-            "description": "This is Samsung Galaxy S50",
-            "category": "smart phone"
-        },
-         {
-            "id": 3,
-            "name": "Laptop",
-            "price": 2500,
-            "description": "This is Lap Top Msi",
-            "category": "Laptop"
-        }
-    ]
+  "products": [
+    {
+      "id": 1,
+      "name": "Iphone 17 Promax",
+      "price": 3000,
+      "description": "This is Iphone 17 Promax",
+      "category": "smart phone"
+    }
+  ]
 }
