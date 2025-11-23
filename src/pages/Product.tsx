@@ -3,6 +3,7 @@ import ProductDetail from "../components/ProductDetail";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Button, Popconfirm, Table } from "antd";
+import { Link } from "react-router";
 export interface IProduct {
   id: number;
   name: string;
@@ -43,6 +44,13 @@ const Product = () => {
       render: (record: IProduct) => {
         return (
           <div>
+            <div>
+              <Link to={`/product/update/${record.id}`}>
+                <Button color="yellow" variant="solid">
+                  Update
+                </Button>
+              </Link>
+            </div>
             <Popconfirm
               title="Are you sure Delete"
               onConfirm={() => mutation.mutate(record.id)}
